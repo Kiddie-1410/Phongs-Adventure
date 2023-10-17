@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Tarot - A deck structure
 date: 2023 Oct 18
 categories: [tarot, cards, tarot deck]
@@ -52,6 +53,8 @@ This part have 22 cards from card 0 to card 21. Name of the cards is:
 21 - the world
 
 Sometime number in the cards is in Roman Numberals.
-| number | Roman numberals |
-|...|...|
-| 1 | I |
+
+---
+number: 1
+Roman numberals: I
+--- 
