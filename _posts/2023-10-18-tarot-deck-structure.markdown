@@ -22,7 +22,7 @@ Tarot also is works of art cause each cards just like a painting telling a story
 ## A deck stucture
 
 A tarot deck usually have 78 cards. 
-It's said 'usually' cause there are some decks have 1 or 2 more cards depend on creator if they need to add more meaning to the deck. <br>
+It's said 'usually' cause there are some decks have extra of 1 or 2 more cards depend on creator if they need to add more meaning to the deck. <br>
 
 In that 78 cards, there are 2 parts: Major Acana and Minor Acana.<br>
 
@@ -54,7 +54,6 @@ This part have 22 cards from card 0 to card 21. Name of the cards is:
 
 Sometime number in the cards is in Roman Numberals.
 
----
-number: 1
-Roman numberals: I
---- 
+| number | Roman number |
+|--- | --- |
+| 1 | I |
