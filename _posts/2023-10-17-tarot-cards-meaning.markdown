@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tarot - Cards meaning
+title: Tarot - cards meaning
 date: 2023 Oct 17
 ---
 

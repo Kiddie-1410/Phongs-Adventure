@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tarot - A deck structure
+title: Tarot - a deck structure
 date: 2023 Oct 18
 categories: [tarot, tarot deck]
 ---
