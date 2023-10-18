@@ -2,7 +2,7 @@
 layout: post
 title: Tarot - A deck structure
 date: 2023 Oct 18
-categories: [tarot, cards, tarot deck]
+categories: [tarot, tarot deck]
 ---
 
 A realy brief information about Tarot definition and a tarot deck stucture.
