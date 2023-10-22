@@ -155,7 +155,7 @@ print(hotel_booking.distribution_channel.value_counts())
 
 #### Outliers
 
-![Checking Outliers](D:\Github\Phongs-Adventure\assets\material\hotel_reservation_pic\outliers.png)
+![Checking Outliers](D:/Github/Phongs-Adventure/assets/material/hotel_reservation_pic/outliers.png)
 
 Showed that columns 18 which is 'adr' has 1 outliers -> choose to delete that row
 
@@ -175,7 +175,78 @@ hotel_booking['family_size'] = hotel_booking['adults'] + hotel_booking['children
 # booking_requests = booking_changes + required_car_parking_spaces + total_of_special_requests : cause of this is all request in booking process.
 hotel_booking['booking_requests'] = hotel_booking.booking_changes + hotel_booking.required_car_parking_spaces + hotel_booking.total_of_special_requests
 
+# stay_in_days = stays_in_weekend_nights + stays_in_week_nights
 hotel_booking['stay_in_days'] = hotel_booking.stays_in_weekend_nights + hotel_booking.stays_in_week_nights
 
 ```
 
+#### Create data for illustrate and calculate
+
+```python 
+
+# create columns 'source' for illustrate customer sources 
+hotel_booking['source'] = np.where((hotel_booking['agent'] > 0) & (hotel_booking['company'] > 0), 'both',
+                          np.where(hotel_booking['agent'] > 0, 'agent',
+                          np.where(hotel_booking['company'] > 0, 'comapny', 
+                          'not applicable')))
+
+# create columns 'meal_request' 
+meal_dictionary = {'BB': 'Meal', 'FB': 'Meal', 'HB': 'Meal', 'SC': 'No meal', 'Undefined': 'No meal'}
+hotel_booking['meal_request'] = hotel_booking['meal'].map(meal_dictionary)
+
+# create columns 'repeated_guest'
+repeated_guest_dictionary = {0: 'New guest', 1: 'Old guest'}
+hotel_booking['repeated_guest'] = hotel_booking['is_repeated_guest'].map(repeated_guest_dictionary)
+
+---
+
+# create columns 'cancelation_status'
+cancel_dictionary = {0: 'Check_in', 1: 'Canceled'}
+hotel_booking['cancelation_status'] = hotel_booking['is_canceled'].map(cancel_dictionary)
+
+--- 
+
+# create columns 'total_booking'
+hotel_booking['total_booking'] = hotel_booking.previous_cancellations + hotel_booking.previous_bookings_not_canceled + 1
+
+---
+
+# create columns 'total_cancelation'
+hotel_booking['total_cancelation'] = hotel_booking['previous_cancellations'] + hotel_booking['is_canceled']
+
+---
+
+# create 'cancelation_rate'
+hotel_booking['cancelation_rate'] = (hotel_booking['total_cancelation'] / hotel_booking['total_booking'] )* 100
+
+```
+
+#### Drop unnescessary columns
+
+drop columns below cause of:
+- **reservation_status**: exactly as 'is_canceled' columns
+- **reservation_status_date**: not see the use
+- **arrival_date_year**: this analysis focus on customer behaviours in months and days
+- **arrival_date_week_number**: this analysis focus on customer behaviours in months and days
+- **company**: replace by 'company_encode'
+- **agent**: replace by 'agent_encode'
+- **market_segment**: similar with distribution_channel
+- **adults**, **children**, **babies**: replace by 'family size'
+- **stays_in_weekend_nights**, **stays_in_week_nights**: replace by 'stay_in_days'
+
+```python
+hotel_booking = hotel_booking.drop(['reservation_status', 'reservation_status_date', 'arrival_date_year', 'arrival_date_week_number', 
+                                    'company', 'agent',
+                                    'market_segment',
+                                    'adults', 'children', 'babies',
+                                    'booking_changes', 'required_car_parking_spaces', 'total_of_special_requests',
+                                    'stays_in_weekend_nights', 'stays_in_week_nights'], axis=1)
+```
+#### Brief EDA
+
+```python
+# basic graphs
+hotel_booking.hist(figsize= (20,20))
+plt.show()
+```
+![brief_eda](D:/Github/Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
