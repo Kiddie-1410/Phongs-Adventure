@@ -155,7 +155,7 @@ print(hotel_booking.distribution_channel.value_counts())
 
 #### Outliers
 
-![Checking Outliers](D:/Github/Phongs-Adventure/assets/material/hotel_reservation_pic/outliers.png)
+![Checking Outliers](/Phongs-Adventure/assets/material/hotel_reservation_pic/outliers.png)
 
 Showed that columns 18 which is 'adr' has 1 outliers -> choose to delete that row
 
@@ -249,4 +249,4 @@ hotel_booking = hotel_booking.drop(['reservation_status', 'reservation_status_da
 hotel_booking.hist(figsize= (20,20))
 plt.show()
 ```
-![brief_eda](D:/Github/Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
+![brief_eda](Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
