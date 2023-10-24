@@ -19,7 +19,9 @@ I. [Data processing](#Data_processing)
    5. [**Create data for illustrate and calculate**](#create_data_for_illustrate_and_calculate)
    6. [**Drop unnescessary columns**](#Drop_unnescessary_columns)
    7. [**Brief EDA**](#brief_eda)
-4. [**Machine Learning Process**](#machine_learning_process)
+4. [Machine Learning Process](#machine_learning_process)
+
+
 ## Data processing <a name="Data_processing"></a>
 
 ### About the data <a name="about_the_data"></a>
@@ -196,7 +198,6 @@ hotel_booking['stay_in_days'] = hotel_booking.stays_in_weekend_nights + hotel_bo
 #### **Create data for illustrate and calculate** <a name="create_data_for_illustrate_and_calculate"></a>
 
 ```python 
-
 # create columns 'source' for illustrate customer sources 
 hotel_booking['source'] = np.where((hotel_booking['agent'] > 0) & (hotel_booking['company'] > 0), 'both',
                           np.where(hotel_booking['agent'] > 0, 'agent',
@@ -204,7 +205,8 @@ hotel_booking['source'] = np.where((hotel_booking['agent'] > 0) & (hotel_booking
                           'not applicable')))
 
 # create columns 'meal_request' 
-meal_dictionary = {'BB': 'Meal', 'FB': 'Meal', 'HB': 'Meal', 'SC': 'No meal', 'Undefined': 'No meal'}
+meal_dictionary = {'BB': 'Meal', 'FB': 'Meal', 'HB': 'Meal', 
+                   'SC': 'No meal', 'Undefined': 'No meal'}
 hotel_booking['meal_request'] = hotel_booking['meal'].map(meal_dictionary)
 
 # create columns 'repeated_guest'
@@ -236,7 +238,7 @@ hotel_booking['cancelation_rate'] = (hotel_booking['total_cancelation'] / hotel_
 
 #### **Drop unnescessary columns** <a name="Drop_unnescessary_columns"></a>
 
-drop columns below cause of:
+Drop columns below cause of:
 - **reservation_status**: exactly as 'is_canceled' columns
 - **reservation_status_date**: not see the use
 - **arrival_date_year**: this analysis focus on customer behaviours in months and days
@@ -266,8 +268,8 @@ plt.show()
 ![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
 
 ## Machine learning process <a name="machine_learning_process"></a>
-### Preparing <a name="Outliers"></a>
-#### **Encode** <a name="Outliers"></a>
+### Preparing <a name="Preparing"></a>
+#### **Encode** <a name="Encode"></a>
 
 First, separate the numeric and categorical columns.
 
@@ -305,7 +307,7 @@ hb_encode = pd.concat([
 ], axis = 1)
 ```
 
-#### **Defining X, y** <a name="Outliers"></a>
+#### **Defining X, y** <a name="Defining X, y"></a>
 First, to calculate correlation and draw a chart for a better view.
 
 ```python
@@ -419,7 +421,7 @@ This is the chart after drop some of the above columns:
 >The y here is: <br>
 > 'is_canceled'
 
-#### **Data balancing** <a name="Outliers"></a>
+#### **Data balancing** <a name="Data balancing"></a>
 
 ```python
 hb_encode_corr['is_canceled'].hist()
@@ -460,7 +462,7 @@ Reset index for further use in normalization.
 hb_balance.reset_index(drop=True, inplace=True)
 ```
 
-#### **Normalization: min-max scaler** <a name="Outliers"></a>
+#### **Normalization: min-max scaler** <a name="Normalization"></a>
 
 ```python
 # Scale X2
@@ -474,7 +476,7 @@ hb = pd.DataFrame(data = X_scaled, columns = hb_balance.iloc[:, 1:11].columns)
 # add y2 column
 hb['is_canceled'] = hb_balance['is_canceled']
 ```
-#### **Split train-test dataset** <a name="Outliers"></a>
+#### **Split train-test dataset** <a name="train_test"></a>
 
 ```python
 # chose X, y
@@ -491,6 +493,6 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
 ```
 
-### Models <a name="Outliers"></a>
+### Models <a name="Models"></a>
 
-#### Logistic <a name="Outliers"></a>
+#### Logistic Regression<a name="Logistic"></a>
