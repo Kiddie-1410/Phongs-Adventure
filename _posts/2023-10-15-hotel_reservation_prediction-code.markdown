@@ -19,8 +19,21 @@ I. [Data processing](#Data_processing)
    5. [**Create data for illustrate and calculate**](#create_data_for_illustrate_and_calculate)
    6. [**Drop unnescessary columns**](#Drop_unnescessary_columns)
    7. [**Brief EDA**](#brief_eda)
-4. [Machine Learning Process](#machine_learning_process)
 
+II. [Machine Learning Process](#machine_learning_process)
+   1. [Preparing](#preparing)
+      1. [Encode](#encode)
+      2. [Defining X, y](#defining_x_y)
+      3. [Data balancing](#balancing)
+      4. [Normalization: min_max scaler](#normalization)
+      5. [Split train_test](#train_test)
+   2. [Models](#models)
+      1. [Logistic_regression](#logistic_regression)
+      2. [Gaussian Navie Bayes](#gaussian_navie_bayes)
+      3. [Decision Tree](#decision_tree)
+      4. [Random Forest](#random_forest)
+      5. [K Nearest Neighbor](#k_nearest_neighbor)
+      6. [Compare models](#compare_models)
 
 ## Data processing <a name="Data_processing"></a>
 
@@ -170,7 +183,7 @@ print(hotel_booking.distribution_channel.value_counts())
 
 #### **Outliers** <a name="Outliers"></a>
 
-![Checking Outliers](/Phongs-Adventure/assets/material/hotel_reservation_pic/outliers.png)
+![Checking Outliers](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/outliers.png)
 
 > Showed that columns 18 which is 'adr' has 1 outliers -> choose to delete that row
 
@@ -265,7 +278,7 @@ For better EDA please check below.
 hotel_booking.hist(figsize= (20,20))
 plt.show()
 ```
-![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
+![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/brief_eda.png)
 
 ## Machine learning process <a name="machine_learning_process"></a>
 ### Preparing <a name="Preparing"></a>
@@ -338,7 +351,7 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 ```
-![correlation](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
+![correlation](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/correlation.png)
 
 As showed in the graph:
 
@@ -402,7 +415,7 @@ plt.figure(figsize=(8,8))
 sns.heatmap(hb_high_correlation, annot=True, cmap='RdYlGn', vmin=-1, vmax=1)
 ```
 
-![correlation_df](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
+![correlation_df](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/correlation.png)
 
 There are couples of columns that have high correlation  with each other:
 - customer_type_transient and customer_type_transient_party
@@ -413,7 +426,7 @@ There are couples of columns that have high correlation  with each other:
 
 This is the chart after drop some of the above columns: 
 
-![correlation_clean](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation_clean.png)
+![correlation_clean](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/correlation_clean.png)
 
 > The X here is: <br>
 > 'agent_encode', 'assigned_room_A', 'assigned_room_D', 'booking_requests', 'customer_type_Transient', 'deposit_type_No Deposit', 'lead_time', 'market_TA/TO'.
@@ -426,7 +439,7 @@ This is the chart after drop some of the above columns:
 ```python
 hb_encode_corr['is_canceled'].hist()
 ```
-![balancing](/Phongs-Adventure/assets/material/hotel_reservation_pic/balancing.png)
+![balancing](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/balancing.png)
 
 > As showed that, the 0 values is double the 1 values, the choice here is to undersampling.
 
@@ -527,7 +540,7 @@ print(classification_report(y_test, y_pred_logistic))
    macro avg       0.74      0.73      0.73     26534
 weighted avg       0.74      0.73      0.73     26534
 ```
-![Logistic_Regression](/Phongs-Adventure/assets/material/hotel_reservation_pic/logistic regression.png)
+![Logistic_Regression](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/logistic regression.png)
 
 - Add to dictionary to compare models
 
@@ -567,12 +580,14 @@ model_results['Logistic Regresson'] = {
 #### Gaussian Navie Bayes <a name="GNB"></a>
 
 - Model setup
+
 ```python
 from sklearn.naive_bayes import GaussianNB
 model_GNB = GaussianNB()
 model_GNB.fit(X_train, y_train)
 ```
-- Result
+- Result 
+
 ```python
 # predict
 y_pred_GNB = model_GNB.predict(X_test)
@@ -590,9 +605,11 @@ print(classification_report(y_test, y_pred_GNB))
    macro avg       0.77      0.69      0.67     26534
 weighted avg       0.77      0.69      0.67     26534
 ```
-![GNB](/Phongs-Adventure/assets/material/hotel_reservation_pic/GNB.png)
+![GNB](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/GNB.png)
 
 - Add to score dictionary
+
+
 ```python
 # confusion matrix
 cnf_matrix = confusion_matrix(y_test, y_pred_GNB)
@@ -624,7 +641,8 @@ model_results['GNB'] = {
 ```
 #### Decision Tree <a name="Decision Tree"></a>
 
-- Model setup
+- Model setup: Finding max_depth
+
 ```python
 from sklearn import tree
 
@@ -655,13 +673,14 @@ plt.grid()
 plt.show()
 ```
 
-![max_depth_decsion_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/max_depth_decision_tree.png)
+![max_depth_decsion_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/max_depth_decision_tree.png)
 
 ```python
 model_tree = tree.DecisionTreeClassifier(max_depth=15, random_state=1)
 model_tree.fit(X_train, y_train)
 ```
 - Result
+
 ```python
 # predict
 y_pred_tree = model_tree.predict(X_test)
@@ -679,8 +698,9 @@ print(classification_report(y_test, y_pred_tree))
    macro avg       0.76      0.76      0.76     26534
 weighted avg       0.76      0.76      0.76     26534
 ```
-![Decision_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/decision_tree.png)
+![Decision_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/decision_tree.png)
 - Add to score dictionary
+
 ```python
 # confusion matrix
 cnf_matrix = confusion_matrix(y_test, y_pred_tree)
@@ -712,7 +732,8 @@ model_results['Decesion Tree'] = {
 ```
 #### Random Forest <a name="Random Forest"></a>
 
-- Model setup
+- Model setup: Finding n_estimators
+
 ```python
 from sklearn.ensemble import RandomForestClassifier
 rf_scores = []
@@ -739,13 +760,14 @@ plt.xticks(x_ticks, rotation=90, size=8)
 plt.grid()
 plt.show()
 ```
-![n_estimator](/Phongs-Adventure/assets/material/hotel_reservation_pic/n_estimators_forest.png)
+![n_estimator](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/n_estimators_forest.png)
 
 ```python
 model_forest = RandomForestClassifier(n_estimators=99, random_state = 1)
 model_forest.fit(X_train, y_train)
 ```
 - Result
+
 ```python
 # predict
 y_pred_forest = model_forest.predict(X_test)
@@ -766,6 +788,7 @@ weighted avg     0.7522    0.7521    0.7521     26534
 ![forest](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction.markdown)
 
 - Add to score dictionary
+
 ```python
 # confusion matrix
 cnf_matrix = confusion_matrix(y_test, y_pred_forest)
@@ -798,6 +821,7 @@ model_results['Random forest'] = {
 #### K Nearest Neighbor<a name="KNN"></a>
 
 - Model setup: Finding n_neighbor
+
 ```python
 from sklearn.neighbors import KNeighborsClassifier
 knn_scores = []
@@ -825,6 +849,7 @@ plt.show()
 
 # n_neighbors = 34
 ```
+![n_neighbor](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -832,6 +857,7 @@ model_KNN = KNeighborsClassifier(n_neighbors=34)
 model_KNN.fit(X_train, y_train)
 ```
 - Result
+
 ```python
 # predict
 y_pred_KNN = model_KNN.predict(X_test)
@@ -850,8 +876,10 @@ print(classification_report(y_test, y_pred_KNN, digits = 4))
 weighted avg     0.7595    0.7570    0.7564     26534
 ```
 
-![KNN](/Phongs-Adventure/assets/material/hotel_reservation_pic/KNN.png)
+![KNN](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/KNN.png)
+
 - Add to score dictionary
+
 ```python
 # confusion matrix
 cnf_matrix = confusion_matrix(y_test, y_pred_KNN)
@@ -914,4 +942,53 @@ plt.title('ROC curves', fontsize=16)
 plt.plot()
 ```
 
-![ROC](/Phongs-Adventure/assets/material/hotel_reservation_pic/ROC.png)
+![ROC](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/ROC.png)
+
+> Showed in the chart that Logistic and Gaussian Naive Bayes have lower lines than other models.
+
+```python
+# compare accuracy chart
+plt.figure(figsize=(5, 2))
+bars = plt.barh(model_results_df['model'], model_results_df['Accuracy Score'], color=colors)
+
+# add % accuracy
+for bar, acc_score in zip(bars, model_results_df['Accuracy Score']):
+    plt.text(bar.get_width() + 0.02, bar.get_y() + bar.get_height() / 2, f'{acc_score*100:.2f}%', va='center')
+
+plt.title('Accuracy Score', fontsize=13)
+
+# set ticks
+plt.xlim(0, 1)
+plt.xticks([0, 0.2, 0.4, 0.6, 0.8, 1], ['0%', '20%', '40%', '60%', '80%', '100%'])
+
+plt.show()
+```
+![Accuracy_score](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
+
+> Accuracy score of most model is around 69% to 75%, and the lowest is Gaussian Naive Bayes. The highest is KNN and Decision Tree with 75.70%
+
+```python
+# compare AUC chart
+plt.figure(figsize=(5, 2))
+bars = plt.barh(model_results_df['model'], model_results_df['ROC AUC Score'], color=colors)
+
+# add % AUC
+for bar, auc_score in zip(bars, model_results_df['ROC AUC Score']):
+    plt.text(bar.get_width() + 0.02, bar.get_y() + bar.get_height() / 2, f'{auc_score*100:.2f}%', va='center', fontsize=12)
+
+plt.title('ROC AUC Score', fontsize=13)
+
+# set ticks
+plt.xlim(0, 1)
+plt.xticks([0, 0.2, 0.4, 0.6, 0.8, 1], ['0%', '20%', '40%', '60%', '80%', '100%'])
+
+plt.show()
+```
+![ROC_AUC](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
+
+> ROC AUC score has average of 80%, highest is KNN with 84.50% and lowest is GNB 78.26%.
+
+> For the conclusion, the model have the best performance is KNN, second model is Decision Tree.
+> Should not use GNB for this data.
+
+For better view please check this post
