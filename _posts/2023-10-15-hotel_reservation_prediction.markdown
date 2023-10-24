@@ -263,7 +263,7 @@ For better EDA please check below.
 hotel_booking.hist(figsize= (20,20))
 plt.show()
 ```
-![brief_eda](Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
+![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/brief_eda.png)
 
 ## Machine learning process <a name="machine_learning_process"></a>
 ### Preparing <a name="Outliers"></a>
@@ -336,7 +336,7 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 ```
-![correlation](Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
+![correlation](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
 
 As showed in the graph:
 
@@ -400,7 +400,7 @@ plt.figure(figsize=(8,8))
 sns.heatmap(hb_high_correlation, annot=True, cmap='RdYlGn', vmin=-1, vmax=1)
 ```
 
-![correlation_df](Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
+![correlation_df](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation.png)
 
 There are couples of columns that have high correlation  with each other:
 - customer_type_transient and customer_type_transient_party
@@ -411,7 +411,7 @@ There are couples of columns that have high correlation  with each other:
 
 This is the chart after drop some of the above columns: 
 
-![correlation_clean](Phongs-Adventure/assets/material/hotel_reservation_pic/correlation_clean.png)
+![correlation_clean](/Phongs-Adventure/assets/material/hotel_reservation_pic/correlation_clean.png)
 
 > The X here is: <br>
 > 'agent_encode', 'assigned_room_A', 'assigned_room_D', 'booking_requests', 'customer_type_Transient', 'deposit_type_No Deposit', 'lead_time', 'market_TA/TO'.
@@ -424,7 +424,7 @@ This is the chart after drop some of the above columns:
 ```python
 hb_encode_corr['is_canceled'].hist()
 ```
-![balancing](Phongs-Adventure/assets/material/hotel_reservation_pic/balancing.png)
+![balancing](/Phongs-Adventure/assets/material/hotel_reservation_pic/balancing.png)
 
 > As showed that, the 0 values is double the 1 values, the choice here is to undersampling.
 
