@@ -495,4 +495,423 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 ### Models <a name="Models"></a>
 
-#### Logistic Regression<a name="Logistic"></a>
+#### Logistic Regression <a name="Logistic"></a>
+
+- Model setup
+
+```python
+# import models
+from sklearn.linear_model import LogisticRegression
+model_logistic = LogisticRegression(random_state=1)
+model_logistic.fit(X_train, y_train)
+```
+
+- Result
+
+```python
+from sklearn.metrics import classification_report
+
+# predict y
+y_pred_logistic = model_logistic.predict(X_test)
+
+# classification report
+print(classification_report(y_test, y_pred_logistic))
+```
+```
+              precision    recall  f1-score   support
+
+           0       0.71      0.80      0.75     13280
+           1       0.77      0.67      0.71     13254
+
+    accuracy                           0.73     26534
+   macro avg       0.74      0.73      0.73     26534
+weighted avg       0.74      0.73      0.73     26534
+```
+![Logistic_Regression](/Phongs-Adventure/assets/material/hotel_reservation_pic/logistic regression.png)
+
+- Add to dictionary to compare models
+
+```python
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_curve
+
+# confusion matrix
+cnf_matrix = confusion_matrix(y_test, y_pred_logistic)
+tn, fp, fn, tp = cnf_matrix.ravel()
+
+# calculate probability and ROC_AUC_score
+y1_proba_logistic = model_logistic.predict_proba(X_test)[:, -1]
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y1_proba_logistic)
+auc_score = roc_auc_score(y_test, y1_proba_logistic)
+
+# class_report
+report = classification_report(y_test, y_pred_logistic, output_dict=True)
+
+# update dictionary to compare
+model_results = {}
+model_results['Logistic Regresson'] = {
+  'Params': None,
+  'TP': tp,
+  'FN': fn,
+  'TN': tn,
+  'FP': fp,
+  'FP_rate': false_positive_rate,
+  'TP_rate': true_positive_rate,
+  'ROC AUC Score': auc_score,
+  'Precision':  report['1']['precision'],
+  'Recall':     report['1']['recall'],
+  'F1_Score':   report['1']['f1-score'],
+  'Accuracy Score': report['accuracy'],
+}
+```
+#### Gaussian Navie Bayes <a name="GNB"></a>
+
+- Model setup
+```python
+from sklearn.naive_bayes import GaussianNB
+model_GNB = GaussianNB()
+model_GNB.fit(X_train, y_train)
+```
+- Result
+```python
+# predict
+y_pred_GNB = model_GNB.predict(X_test)
+
+# classification report
+print(classification_report(y_test, y_pred_GNB))
+```
+```
+              precision    recall  f1-score   support
+
+           0       0.62      0.96      0.76     13280
+           1       0.91      0.43      0.58     13254
+
+    accuracy                           0.69     26534
+   macro avg       0.77      0.69      0.67     26534
+weighted avg       0.77      0.69      0.67     26534
+```
+![GNB](/Phongs-Adventure/assets/material/hotel_reservation_pic/GNB.png)
+
+- Add to score dictionary
+```python
+# confusion matrix
+cnf_matrix = confusion_matrix(y_test, y_pred_GNB)
+tn, fp, fn, tp = cnf_matrix.ravel()
+
+# calculate probability and ROC_AUC_score
+y_proba_GNB = model_GNB.predict_proba(X_test)[:, -1]
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_proba_GNB)
+auc_score = roc_auc_score(y_test, y_proba_GNB)
+
+# class_report
+report = classification_report(y_test, y_pred_GNB, output_dict=True)
+
+# update dictionary to compare
+model_results['GNB'] = {
+  'Params': None,
+  'TP': tn,
+  'FN': fp,
+  'TN': fn,
+  'FP': tp,
+  'FP_rate': false_positive_rate,
+  'TP_rate': true_positive_rate,
+  'ROC AUC Score': auc_score,
+  'Precision':  report['1']['precision'],
+  'Recall':     report['1']['recall'],
+  'F1_Score':   report['1']['f1-score'],
+  'Accuracy Score': report['accuracy'],
+}
+```
+#### Decision Tree <a name="Decision Tree"></a>
+
+- Model setup
+```python
+from sklearn import tree
+
+# setup to find max_depth
+tree_scores = []
+for d in range(1, 21):
+    model_tree = tree.DecisionTreeClassifier(max_depth=d, random_state=0)
+    model_tree.fit(X_train, y_train)
+    model_score = model_tree.score(X_test, y_test)
+    tree_scores.append(model_score*100)
+
+# Plot score
+max_depth = [n for n in range(1, 21)]
+max_n =     [n      for n, score in zip(max_depth, tree_scores) if score == max(tree_scores)]
+max_score = [score  for n, score in zip(max_depth, tree_scores) if score == max(tree_scores)]
+x_ticks =   [n      for n, score in zip(max_depth, tree_scores) if score == max(tree_scores)]
+
+print(f"Mô hình có score cao nhất = {max_score[0]:.2f}% tại số tầng = {max_n}")
+
+plt.figure(figsize=(10, 4))
+plt.scatter(max_n, max_score, color='red', marker = 'o')
+plt.plot(max_depth, tree_scores)
+plt.ylabel('Accuracy (%)',fontsize=12)
+plt.xlabel('max_depth',fontsize=12)
+plt.xticks(x_ticks, size=10)
+plt.title("Accuracy of Decision Tree by max_depth", size=16)
+plt.grid()
+plt.show()
+```
+
+![max_depth_decsion_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/max_depth_decision_tree.png)
+
+```python
+model_tree = tree.DecisionTreeClassifier(max_depth=15, random_state=1)
+model_tree.fit(X_train, y_train)
+```
+- Result
+```python
+# predict
+y_pred_tree = model_tree.predict(X_test)
+
+# class_report
+print(classification_report(y_test, y_pred_tree))
+```
+```
+              precision    recall  f1-score   support
+
+           0       0.73      0.81      0.77     13280
+           1       0.79      0.70      0.74     13254
+
+    accuracy                           0.76     26534
+   macro avg       0.76      0.76      0.76     26534
+weighted avg       0.76      0.76      0.76     26534
+```
+![Decision_tree](/Phongs-Adventure/assets/material/hotel_reservation_pic/decision_tree.png)
+- Add to score dictionary
+```python
+# confusion matrix
+cnf_matrix = confusion_matrix(y_test, y_pred_tree)
+tn, fp, fn, tp = cnf_matrix.ravel()
+
+# calculate probability and ROC_AUC_score
+y_proba_tree = model_tree.predict_proba(X_test)[:, -1]
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_proba_tree)
+auc_score = roc_auc_score(y_test, y_proba_tree)
+
+# class_report
+report = classification_report(y_test, y_pred_tree, output_dict=True)
+
+# update dictionary to compare
+model_results['Decesion Tree'] = {
+  'Params': 'max_depth = 1',
+  'TP': tn,
+  'FN': fp,
+  'TN': fn,
+  'FP': tp,
+  'Precision':  report['1']['precision'],
+  'Recall':     report['1']['recall'],
+  'F1_Score':   report['1']['f1-score'],
+  'Accuracy Score': report['accuracy'],
+  'ROC AUC Score': auc_score,
+  'FP_rate': false_positive_rate,
+  'TP_rate': true_positive_rate,
+}
+```
+#### Random Forest <a name="Random Forest"></a>
+
+- Model setup
+```python
+from sklearn.ensemble import RandomForestClassifier
+rf_scores = []
+for trees in range(70, 101):
+    model_forest = RandomForestClassifier(n_estimators=trees, random_state = 1)
+    model_forest.fit(X_train, y_train)
+    model_score = model_forest.score(X_test, y_test)
+    rf_scores.append(model_score)
+
+# Plot score
+n_estimators = [n for n in range(70, 101)]
+max_n        = [n for n, score in zip(n_estimators, rf_scores) if score == max(rf_scores)]
+max_score    = [score for n, score in zip(n_estimators, rf_scores) if score == max(rf_scores)]
+x_ticks      = [n for n, score in zip(n_estimators, rf_scores) if score == max(rf_scores)]
+
+print(f"Mô hình có score cao nhất = {max_score[0]:.2f} tại số cây = {max_n}")
+
+plt.figure(figsize=(7, 2))
+plt.scatter(max_n, max_score, color='red', marker = 'o')
+plt.plot(n_estimators, rf_scores)
+plt.xlabel('n_estimators')
+plt.ylabel('Model Score')
+plt.xticks(x_ticks, rotation=90, size=8)
+plt.grid()
+plt.show()
+```
+![n_estimator](/Phongs-Adventure/assets/material/hotel_reservation_pic/n_estimators_forest.png)
+
+```python
+model_forest = RandomForestClassifier(n_estimators=99, random_state = 1)
+model_forest.fit(X_train, y_train)
+```
+- Result
+```python
+# predict
+y_pred_forest = model_forest.predict(X_test)
+
+# class_report
+print(classification_report(y_test, y_pred_forest, digits = 4))
+```
+```python
+              precision    recall  f1-score   support
+
+           0     0.7475    0.7622    0.7548     13280
+           1     0.7569    0.7420    0.7494     13254
+
+    accuracy                         0.7521     26534
+   macro avg     0.7522    0.7521    0.7521     26534
+weighted avg     0.7522    0.7521    0.7521     26534
+```
+![forest](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction.markdown)
+
+- Add to score dictionary
+```python
+# confusion matrix
+cnf_matrix = confusion_matrix(y_test, y_pred_forest)
+tn, fp, fn, tp = cnf_matrix.ravel()
+
+# calculate probability and ROC_AUC_score
+y_proba_forest = model_forest.predict_proba(X_test)[:, -1]
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_proba_forest)
+auc_score = roc_auc_score(y_test, y_proba_forest)
+
+# class_report
+report = classification_report(y_test, y_pred_forest, output_dict=True)
+
+# update dictionary to compare
+model_results['Random forest'] = {
+  'Params': 'n_estimators = 90',
+  'TP': tn,
+  'FN': fp,
+  'TN': fn,
+  'FP': tp,
+  'Precision':  report['1']['precision'],
+  'Recall':     report['1']['recall'],
+  'F1_Score':   report['1']['f1-score'],
+  'Accuracy Score': report['accuracy'],
+  'ROC AUC Score': auc_score,
+  'FP_rate': false_positive_rate,
+  'TP_rate': true_positive_rate,
+}
+```
+#### K Nearest Neighbor<a name="KNN"></a>
+
+- Model setup: Finding n_neighbor
+```python
+from sklearn.neighbors import KNeighborsClassifier
+knn_scores = []
+for k in range(20, 41):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X_train, y_train)
+    model_score = model.score(X_test, y_test)
+    knn_scores.append(model_score)
+
+# Plot score
+n_neighbors = [k for k in range(20, 41)]
+max_n =     [k      for k, score in zip(n_neighbors, knn_scores) if score == max(knn_scores)]
+max_score = [score  for k, score in zip(n_neighbors, knn_scores) if score == max(knn_scores)]
+x_ticks =   [k      for k, score in zip(n_neighbors, knn_scores) if score == max(knn_scores)]
+print(f"Mô hình có score cao nhất = {max_score[0]:.2f} tại số cây = {max_n}")
+
+plt.figure(figsize=(6, 2))
+plt.scatter(max_n, max_score, color='red', marker = 'o')
+plt.plot(n_neighbors, knn_scores)
+plt.xlabel('n_neighbors')
+plt.ylabel('Model Score')
+plt.xticks(x_ticks, rotation=45, size=8)
+plt.grid()
+plt.show()
+
+# n_neighbors = 34
+```
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+model_KNN = KNeighborsClassifier(n_neighbors=34)
+model_KNN.fit(X_train, y_train)
+```
+- Result
+```python
+# predict
+y_pred_KNN = model_KNN.predict(X_test)
+
+# class_report
+print(classification_report(y_test, y_pred_KNN, digits = 4))
+```
+```
+              precision    recall  f1-score   support
+
+           0     0.7344    0.8061    0.7686     13280
+           1     0.7846    0.7079    0.7443     13254
+
+    accuracy                         0.7570     26534
+   macro avg     0.7595    0.7570    0.7564     26534
+weighted avg     0.7595    0.7570    0.7564     26534
+```
+
+![KNN](/Phongs-Adventure/assets/material/hotel_reservation_pic/KNN.png)
+- Add to score dictionary
+```python
+# confusion matrix
+cnf_matrix = confusion_matrix(y_test, y_pred_KNN)
+tn, fp, fn, tp = cnf_matrix.ravel()
+
+# calculate probability and ROC_AUC_score
+y_proba_KNN = model_KNN.predict_proba(X_test)[:, -1]
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_proba_KNN)
+auc_score = roc_auc_score(y_test, y_proba_KNN)
+
+# class_report
+report = classification_report(y_test, y_pred_KNN, output_dict=True)
+
+# update dictionary to compare
+model_results['KNN'] = {
+  'Params': 'n_neighbors = 1',
+  'TP': tn,
+  'FN': fp,
+  'TN': fn,
+  'FP': tp,
+  'Precision':  report['1']['precision'],
+  'Recall':     report['1']['recall'],
+  'F1_Score':   report['1']['f1-score'],
+  'Accuracy Score': report['accuracy'],
+  'ROC AUC Score': auc_score,
+  'FP_rate': false_positive_rate,
+  'TP_rate': true_positive_rate,
+}
+```
+
+#### Compare models <a name="Compare model"></a>
+
+```python
+# combine and set dataframe
+model_results_df = pd.DataFrame.from_dict(model_results, orient='index').reset_index()
+model_results_df.rename(columns={'index':'model'}, inplace=True)
+model_results_df
+
+# create ROC chart
+models = model_results_df['model'].unique()
+colors = ['tab:blue','tab:orange','tab:green','tab:red','tab:purple','tab:gray']
+
+plt.figure(figsize=(10,5))
+
+# ROC curve
+for model, color in zip(models, colors):
+  plt.plot( model_results[model]['FP_rate'] ,model_results[model]['TP_rate'], linewidth=2, color=color )
+plt.legend(['Logistic Regression', 'Gaussian Naive Bayes', 'Decision Tree', 'Random Forest', 'K Nearest Neighbors', 'Support Vector Machine'], fontsize=12)
+
+# Random chances line
+plt.plot([0,1], ls='--', linewidth=1, color='black')
+
+# set lable
+plt.xlabel('False Positive Rate', fontsize=16)
+plt.ylabel('True Positive Rate', fontsize=16)
+
+# title
+plt.title('ROC curves', fontsize=16)
+
+plt.plot()
+```
+
+![ROC](/Phongs-Adventure/assets/material/hotel_reservation_pic/ROC.png)
