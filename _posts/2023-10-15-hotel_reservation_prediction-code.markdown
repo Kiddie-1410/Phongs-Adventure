@@ -1,11 +1,9 @@
 ---
 layout: post
-title: DA - Hotel Reservation Prediction
+title: DA - Hotel Reservation Prediction (Code)
 date: 2023 Oct 15
 categories: [DA, coding]
 ---
-
-This post is a record of a final project of Data Analyst course.
 
 # Table of contents
 I. [Data processing](#Data_processing)
@@ -991,4 +989,4 @@ plt.show()
 > For the conclusion, the model have the best performance is KNN, second model is Decision Tree.
 > Should not use GNB for this data.
 
-For better view please check this post
+For better view please check [presentation post.](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction_presentation.markdown)
