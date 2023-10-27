@@ -5,7 +5,6 @@ date: 2023 Oct 27
 categories: [witchcraft, moon]
 ---
 
-
 This post talks about phase of the Moon and effection.
 
 Reference book: Chapter 1 - Moon magic by Ahlquist, Diane 
