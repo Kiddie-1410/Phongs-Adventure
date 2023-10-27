@@ -87,7 +87,6 @@ hotel_booking.duplicated().sum()
 > and <br>
 > - "Since this is hotel real data, all data elements pertaining hotel or costumer identification were deleted."
 
-
 > Cause of 'Each observation represents a hotel booking' therefore data record is separate customers from separate hotels and coincidencelly have the same data. the action here is choose to **keep all the duplications**.
 
 #### **Null and Undefined data** <a name="Null and Undefined"></a>
