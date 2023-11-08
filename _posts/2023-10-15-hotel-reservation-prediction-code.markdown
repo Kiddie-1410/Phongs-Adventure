@@ -7,35 +7,35 @@ categories: [DA, coding]
 
 # Table of contents
 I. [Data processing](#Data_processing)
-1. [About the data](#about_the_data)
+1. [About the data](#About_the_data)
 2. [Data overview](#Data_overview)
 3. [Data cleaning](#Data_cleaning)
-   1. [**Duplicated**](#Duplicated)
-   2. [**Null and Undefined**](#null_and_undefined_data)
-   3. [**Outliers**](#Outliers)
-   4. [**Merge columns**](#merge_columns)
-   5. [**Create data for illustrate and calculate**](#create_data_for_illustrate_and_calculate)
-   6. [**Drop unnescessary columns**](#Drop_unnescessary_columns)
-   7. [**Brief EDA**](#brief_eda)
+   1. [Duplicated](#Duplicated)
+   2. [Null and Undefined](#Null_and_undefined_data)
+   3. [Outliers](#Outliers)
+   4. [Merge columns](#Merge_columns)
+   5. [Create data for illustrate and calculate](#Create_data_for_illustrate_and_calculate)
+   6. [Drop unnescessary columns](#Drop_unnescessary_columns)
+   7. [Brief EDA](#Brief_eda)
 
-II. [Machine Learning Process](#machine_learning_process)
-   1. [Preparing](#preparing)
-      1. [Encode](#encode)
-      2. [Defining X, y](#defining_x_y)
-      3. [Data balancing](#balancing)
-      4. [Normalization: min_max scaler](#normalization)
-      5. [Split train_test](#train_test)
-   2. [Models](#models)
-      1. [Logistic_regression](#logistic_regression)
-      2. [Gaussian Navie Bayes](#gaussian_navie_bayes)
-      3. [Decision Tree](#decision_tree)
-      4. [Random Forest](#random_forest)
-      5. [K Nearest Neighbor](#k_nearest_neighbor)
-      6. [Compare models](#compare_models)
+II. [Machine Learning Process](#Machine_learning_process)
+   1. [Preparing](#Preparing)
+      1. [Encode](#Encode)
+      2. [Defining X, y](#Defining_x_y)
+      3. [Data balancing](#Balancing)
+      4. [Normalization: min_max scaler](#Normalization)
+      5. [Split train_test](#Train_test)
+   2. [Models](#Models)
+      1. [Logistic_regression](#Logistic)
+      2. [Gaussian Navie Bayes](#GNB)
+      3. [Decision Tree](#Decision_tree)
+      4. [Random Forest](#Random_forest)
+      5. [K Nearest Neighbor](#KNN)
+      6. [Compare models](#Compare_model)
 
 ## Data processing <a name="Data_processing"></a>
 
-### About the data <a name="about_the_data"></a>
+### About the data <a name="About_the_data"></a>
 
 Source: Kaggle - [Hotel Booking](https://www.kaggle.com/datasets/mathsian/hotel-bookings/data)
 
@@ -89,7 +89,7 @@ hotel_booking.duplicated().sum()
 
 > Cause of 'Each observation represents a hotel booking' therefore data record is separate customers from separate hotels and coincidencelly have the same data. the action here is choose to **keep all the duplications**.
 
-#### **Null and Undefined data** <a name="Null and Undefined"></a>
+#### **Null and Undefined data** <a name="Null_and_undefined_data"></a>
 
 ``` python 
 # checking null
@@ -189,7 +189,7 @@ print(hotel_booking.distribution_channel.value_counts())
 hotel_booking = hotel_booking[hotel_booking['adr'] < 1000] #.reset_index(drop=True, inplace=True)
 ```
 
-#### **Merge columns** <a name="merge_columns"></a>
+#### **Merge columns** <a name="Merge_columns"></a>
 
 Merge columns that have similar meaning
 
@@ -205,7 +205,7 @@ hotel_booking['stay_in_days'] = hotel_booking.stays_in_weekend_nights + hotel_bo
 
 ```
 
-#### **Create data for illustrate and calculate** <a name="create_data_for_illustrate_and_calculate"></a>
+#### **Create data for illustrate and calculate** <a name="Create_data_for_illustrate_and_calculate"></a>
 
 ```python 
 # create columns 'source' for illustrate customer sources 
@@ -214,10 +214,14 @@ hotel_booking['source'] = np.where((hotel_booking['agent'] > 0) & (hotel_booking
                           np.where(hotel_booking['company'] > 0, 'comapny', 
                           'not applicable')))
 
+---
+
 # create columns 'meal_request' 
 meal_dictionary = {'BB': 'Meal', 'FB': 'Meal', 'HB': 'Meal', 
                    'SC': 'No meal', 'Undefined': 'No meal'}
 hotel_booking['meal_request'] = hotel_booking['meal'].map(meal_dictionary)
+
+---
 
 # create columns 'repeated_guest'
 repeated_guest_dictionary = {0: 'New guest', 1: 'Old guest'}
@@ -267,9 +271,10 @@ hotel_booking = hotel_booking.drop(['reservation_status', 'reservation_status_da
                                     'booking_changes', 'required_car_parking_spaces', 'total_of_special_requests',
                                     'stays_in_weekend_nights', 'stays_in_week_nights'], axis=1)
 ```
-#### **Brief EDA** <a name="brief_eda"></a>
 
-For better EDA please check below.
+#### **Brief EDA** <a name="Brief_eda"></a>
+
+For better EDA please check [presentation post](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction_presentation.markdown).
 ```python
 # basic graphs
 hotel_booking.hist(figsize= (20,20))
@@ -277,7 +282,8 @@ plt.show()
 ```
 ![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/brief_eda.png)
 
-## Machine learning process <a name="machine_learning_process"></a>
+## Machine learning process <a name="Machine_learning_process"></a>
+
 ### Preparing <a name="Preparing"></a>
 #### **Encode** <a name="Encode"></a>
 
@@ -316,7 +322,6 @@ hb_encode = pd.concat([
     onehot_customer_type
 ], axis = 1)
 ```
-
 #### **Defining X, y** <a name="Defining X, y"></a>
 First, to calculate correlation and draw a chart for a better view.
 
@@ -486,7 +491,7 @@ hb = pd.DataFrame(data = X_scaled, columns = hb_balance.iloc[:, 1:11].columns)
 # add y2 column
 hb['is_canceled'] = hb_balance['is_canceled']
 ```
-#### **Split train-test dataset** <a name="train_test"></a>
+#### **Split train-test dataset** <a name="Train_test"></a>
 
 ```python
 # chose X, y
@@ -636,7 +641,7 @@ model_results['GNB'] = {
   'Accuracy Score': report['accuracy'],
 }
 ```
-#### Decision Tree <a name="Decision Tree"></a>
+#### Decision Tree <a name="Decision_tree"></a>
 
 - Model setup: Finding max_depth
 
@@ -727,7 +732,7 @@ model_results['Decesion Tree'] = {
   'TP_rate': true_positive_rate,
 }
 ```
-#### Random Forest <a name="Random Forest"></a>
+#### Random Forest <a name="Random_forest"></a>
 
 - Model setup: Finding n_estimators
 
@@ -782,7 +787,7 @@ print(classification_report(y_test, y_pred_forest, digits = 4))
    macro avg     0.7522    0.7521    0.7521     26534
 weighted avg     0.7522    0.7521    0.7521     26534
 ```
-![forest](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction.markdown)
+![forest](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/forest.png)
 
 - Add to score dictionary
 
@@ -846,7 +851,7 @@ plt.show()
 
 # n_neighbors = 34
 ```
-![n_neighbor](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
+![n_neighbor](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/n_neighbor.png)
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -907,7 +912,7 @@ model_results['KNN'] = {
 }
 ```
 
-#### Compare models <a name="Compare model"></a>
+#### Compare models <a name="Compare_model"></a>
 
 ```python
 # combine and set dataframe
@@ -960,7 +965,7 @@ plt.xticks([0, 0.2, 0.4, 0.6, 0.8, 1], ['0%', '20%', '40%', '60%', '80%', '100%'
 
 plt.show()
 ```
-![Accuracy_score](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
+![Accuracy_score](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/accuracy_score.png)
 
 > Accuracy score of most model is around 69% to 75%, and the lowest is Gaussian Naive Bayes. The highest is KNN and Decision Tree with 75.70%
 
@@ -981,7 +986,7 @@ plt.xticks([0, 0.2, 0.4, 0.6, 0.8, 1], ['0%', '20%', '40%', '60%', '80%', '100%'
 
 plt.show()
 ```
-![ROC_AUC](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/image.png)
+![ROC_AUC](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/ROC_AUC.png)
 
 > ROC AUC score has average of 80%, highest is KNN with 84.50% and lowest is GNB 78.26%.
 
@@ -989,3 +994,5 @@ plt.show()
 > Should not use GNB for this data.
 
 For better view please check [presentation post.](/Phongs-Adventure/_posts/2023-10-15-hotel_reservation_prediction_presentation.markdown)
+
+Author: Thi Phong

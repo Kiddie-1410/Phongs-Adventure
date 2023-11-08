@@ -12,6 +12,9 @@ Reference book: Chapter 1 - Moon magic by Ahlquist, Diane
 The Moon does not change shape and not shine. The Moon light that Earth people watching is the reflect light of the Sun.
 
 To know more about how it work, check out this video below, it is easier to see in motion.
+
+<iframe width="650" height="315" src="http://www.youtube.com/embed/mQwvHn_qkBA" frameborder="0" allowfullscreen></iframe> 
+
 Video: [Phases of the Moon](https://www.youtube.com/watch?v=mQwvHn_qkBA)
 
 # Table of contents
@@ -20,11 +23,11 @@ Video: [Phases of the Moon](https://www.youtube.com/watch?v=mQwvHn_qkBA)
 2. [Waxing moon](#waxing-moon)
 3. [Full moon](#full-moon)
 4. [Waning moon](#waning-moon)
-5. [Dark moon](#5-dark-moon)
+5. [Dark moon](#dark-moon)
 
 There are 8 phases of the Moon: 4 primary phases and 4 intermediate phases.
 
-# 1. New moon <a name = 'New-moon'> </a>
+# 1. New moon <a name = 'new-moon'> </a>
 - Appearance: 
 
 <!-- picture update - New moon -->
@@ -36,7 +39,7 @@ This is the primary first phase of the Moon and is sometimes identified as the c
 **A new beginning**
 Developing an idea, activity or planning anything that promotes betterment in future. The time of new beginnings, a great period to start a new relationships of nay kind. A starting point for exploring new oppotunities. 
 
-# 2. Waxing moon <a name = 'Waxing-moon'> </a>
+# 2. Waxing moon <a name = 'waxing-moon'> </a>
 - Apperance:
 
 <!-- picture update - waxing moon -->
@@ -47,7 +50,7 @@ The Moon appears to grow in size during this phase. It is on its journey to a fu
 
 **To amplifying things that already have**: take relationship to the next level, enlarge back account, business growth, improve comminications, or healing.
 
-# 3. Full moon <a name = 'Full-moon'> </a> 
+# 3. Full moon <a name = 'full-moon'> </a> 
 - Apperance:
 
 <!-- picture update - full moon -->
@@ -58,7 +61,7 @@ We all know what the full Moon looks like—a bright, round circle.
 
 **The time for fullfillment**: try to perfect thoughts and plans, good for intuition training. Meditating and manifesting what you want are most intriguing at this time. It's about strength and controlling vibrations for a better outcome.
 
-# 4. Waning moon <a name = 'Waning-moon'> </a>
+# 4. Waning moon <a name = 'waning-moon'> </a>
 - Apperance:
 
 <!-- picture update - waning moon -->
@@ -69,7 +72,7 @@ The Moon now appears as if it is getting smaller and smaller after it was full.
 
 This is an occasion for releasing and concluding. Start the diet you were planning and maybe will get smaller and smaller, like the Moon itself during this phase. Get rid of bad habits, difficult relationships, and anything else that is personally toxic, such as negative thinking.
 
-# 5. Dark moon <a name = 'Dark-moon'> </a>
+# 5. Dark moon <a name = 'dark-moon'> </a>
 
 This face is not in the primary phases this just to clarify it with the new moon.
 
