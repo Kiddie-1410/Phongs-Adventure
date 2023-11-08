@@ -12,7 +12,7 @@ O. [Project materials](#Project_materials)
 
 I. [EDA](#EDA)
 
-II. [Model runing](#Model_running)
+II. [Model running](#Model_running)
 
 
 ## O. Project material <a name="Project_materials"></a>
@@ -25,3 +25,4 @@ For better understanding the project please check others file further informatio
 
 ## I. EDA <a name ="EDA"></a>
 
+## II. Model running <a name="Model_running"></a>
