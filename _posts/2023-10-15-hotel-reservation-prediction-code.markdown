@@ -114,6 +114,7 @@ market_segment                       2
 ```
 
 in short:
+
 |*columns*|*problem*|
 |---|---|
 |agent| has nan|
@@ -274,7 +275,7 @@ hotel_booking = hotel_booking.drop(['reservation_status', 'reservation_status_da
 
 #### **Brief EDA** <a name="Brief_eda"></a>
 
-For better EDA please check [presentation post](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-presentation.markdown).
+For better EDA please check [presentation post](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-report.markdown).
 ```python
 # basic graphs
 hotel_booking.hist(figsize= (20,20))
@@ -993,6 +994,6 @@ plt.show()
 > For the conclusion, the model have the best performance is KNN, second model is Decision Tree.
 > Should not use GNB for this data.
 
-For better view please check [presentation post.](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-presentation.markdown)
+For better view please check [presentation post.](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-report.markdown)
 
 Author: Thi Phong
