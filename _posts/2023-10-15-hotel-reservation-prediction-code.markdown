@@ -207,7 +207,6 @@ hotel_booking['stay_in_days'] = hotel_booking.stays_in_weekend_nights + hotel_bo
 ```
 
 #### **Create data for illustrate and calculate** <a name="Create_data_for_illustrate_and_calculate"></a>
-
 ```python 
 # create columns 'source' for illustrate customer sources 
 hotel_booking['source'] = np.where((hotel_booking['agent'] > 0) & (hotel_booking['company'] > 0), 'both',
@@ -273,15 +272,60 @@ hotel_booking = hotel_booking.drop(['reservation_status', 'reservation_status_da
                                     'stays_in_weekend_nights', 'stays_in_week_nights'], axis=1)
 ```
 
-#### **Brief EDA** <a name="Brief_eda"></a>
+#### **EDA** <a name="Brief_eda"></a>
 
-For better EDA please check [presentation post](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-report.markdown).
+<!-- For better EDA please check [presentation post](/Phongs-Adventure/da/coding/2023/10/15/hotel-reservation-prediction-report#Data_handling). -->
+- Overview:
 ```python
 # basic graphs
 hotel_booking.hist(figsize= (20,20))
 plt.show()
 ```
 ![brief_eda](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/brief_eda.png)
+
+- Customer sources:
+
+![channel_distribution](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/channel_distribution.png)
+
+  There are 5 distribution channels:
+  > **TA/TO**: 'TA' mean 'Travel Agents' and 'TO' mean 'Tour Operators' and they are the main sources of customers with 82% (98,000 customers) booking by this channel. 
+  > Cancelation rate of this channels take 41%. <br>
+  > **Direct** and **Corporate** have a relatively modest share, comprising just around 22.000 customers, less than half of TA/TO channel. <br>
+  > Other channels **GDS** (Global Distribution System) and **Undefined** have only 200 customers over 3 years of data. <br>
+  > **Undefined** customer has 100% cancelation rate.
+
+![hotel_resort](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/hotel_resort.png)
+
+ > There are 2 types of hotel, City hotel and Resot hotel. Although **75% of bookings are for the City hotel**, its **cancellation rate is also high**, standing at 60%.
+
+![customer_type](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/customer_type.png)
+
+> **Transient** customers is holding the high quantity of **90k customers**, and their **cancelation rate also the highest of 41%**.<br>
+> Only **577 customer from Group** but their **cancelation rate is only 10%**. <br>
+> Despite more than 4000 customers booking from the **Contract being lower than the Transient-party**, the **Contract customer cancellation rate is 6% higher** than that of the Transient-party.
+
+- Customer character:
+
+![country_cancelation_repeat_customer](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/country_cancelation_repeat_customer.png)
+
+> While most bookings come from Portuguese guests, their Cancellation is 1.3 times higher than their Check-in.
+>
+> Other country have nearly half of the customers but their Cancelation is 4 to 5 times lower than their Check-in.
+>
+> Booking by New-guests is 30 times higher than Old-guests. Cancelation in New guests is 37% but it is only 15% in Old guests.
+
+![family_size_meal_request](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/family_size_meal_request.png)
+
+> Family size from more 20 people and 6 people have absolute Cancelation rate. The lower the family size the lower Cancelation rate.
+>
+> Only 10% booking not request meal.
+
+![day_in_wait_list](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/day_in_wait_list.png)
+
+> Waiting days can up to 400 days, but most booking comes around 200 days. There is no clear indication that waiting days relate to cancelation rate. 
+
+
+
 
 ## Machine learning process <a name="Machine_learning_process"></a>
 
@@ -994,6 +1038,6 @@ plt.show()
 > For the conclusion, the model have the best performance is KNN, second model is Decision Tree.
 > Should not use GNB for this data.
 
-For better view please check [presentation post.](D:\Github\Phongs-Adventure\_posts\2023-10-15-hotel-reservation-prediction-report.markdown)
+For better view please check [presentation post.](/Phongs-Adventure/posts/hotel-reservation-prediction-report#)
 
 Author: Thi Phong

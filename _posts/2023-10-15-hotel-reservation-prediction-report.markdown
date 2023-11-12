@@ -43,6 +43,7 @@ For better understanding the project please check others file further informatio
   - Conduct algorithms to predict/ classify customers reservation.
 
 - About the data
+
 | **Number** | **Customers Source** | **Customer Character**         | **Reservation**             | **Recorded time**         |
 |------------|----------------------|--------------------------------|-----------------------------|---------------------------|
 | 1          | hotel                | adults                         | is_canceled                 | arrival_date_year         |
@@ -77,5 +78,5 @@ hotel_booking.duplicated().sum()
 
 
 
-
+![Channel_distribution]](image.png)
 ## II. Model running <a name="Model_running"></a>
