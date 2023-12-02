@@ -125,7 +125,7 @@ in short:
 |market_segment| has Undefined|
 |distribution_channel| has Undefined|
 
-> author claim that:<br>
+> Author claim that:<br>
 > In some categorical variables like Agent or Company, “NULL” is presented as one of the categories.<br>
 > This should not be considered a missing value, but rather as “not applicable”.<br>
 > For example, if a booking “Agent” is defined as “NULL” it means that the booking did not came from a travel agent.
@@ -405,7 +405,7 @@ As showed in the graph:
 > *'cancelation_rate'* and *'total_cancelation'* have high correlation with 'is_canceled' cause 'is_canceled' constitutes for their formular. <br>
 > --> not use this columns in model to avoid false calculation.
 
-Other than 2 above columns, overal correlation numbers are decent, no more than |0,5|. Major of them are below |0,1|. Therefore, those columns have correlation higher than 0,1 and lower than -0.1 are chosen.
+Other than 2 above columns, overal correlation numbers are decent, no more than 0,5 and less than -0.5. Major of them are between -0,1 to 0,1. Therefore, those columns have correlation higher than 0,1 and lower than -0.1 are chosen.
 
 ```python
 # sort columns have value outside of this range (-0.1, 0.1)
@@ -434,18 +434,18 @@ Checking correlation of columns to each one another.
 # create new dataset
 hb_encode_corr =  hb_encode[['is_canceled',
                              'agent_encode',
-                            'assigned_room_A',
-                            'assigned_room_D',
-                            'booking_requests',
-                            'customer_type_Transient',
-                            'customer_type_Transient-Party',
-                            'deposit_type_No Deposit',
-                            'deposit_type_Non Refund',
-                            'lead_time',
-                            'market_Direct',
-                            'market_TA/TO',
-                            'previous_cancellations'
-                            ]]
+                             'assigned_room_A',
+                             'assigned_room_D',
+                             'booking_requests',
+                             'customer_type_Transient',
+                             'customer_type_Transient-Party',
+                             'deposit_type_No Deposit',
+                             'deposit_type_Non Refund',
+                             'lead_time',
+                             'market_Direct',
+                             'market_TA/TO',
+                             'previous_cancellations'
+                             ]]
 
 # draw correlation heatmap
 
@@ -896,7 +896,7 @@ plt.show()
 
 # n_neighbors = 34
 ```
-![n_neighbor](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/n_neighbor.png)
+![n_neighbor](/Phongs-Adventure/assets/material/hotel_reservation_pic/the_code/n_neighbors.png)
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -1036,8 +1036,7 @@ plt.show()
 > ROC AUC score has average of 80%, highest is KNN with 84.50% and lowest is GNB 78.26%.
 
 > For the conclusion, the model have the best performance is KNN, second model is Decision Tree.
-> Should not use GNB for this data.
 
-For better view please check [presentation post.](/Phongs-Adventure/posts/hotel-reservation-prediction-report#)
+> Should not use GNB for this data.
 
 Author: Thi Phong
