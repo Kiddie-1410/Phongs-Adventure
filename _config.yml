@@ -29,7 +29,8 @@ linkedin_username: phongpham1410
 
 # Build settings
 # theme: minima
-theme: jekyll-theme-yat
+# theme: jekyll-theme-yat
+remote_theme: "jeffreytse/jekyll-theme-yat"
 
 
 
