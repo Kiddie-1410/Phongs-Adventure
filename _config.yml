@@ -28,7 +28,11 @@ github_username:  kiddie-1410
 linkedin_username: phongpham1410
 
 # Build settings
-theme: minima
+# theme: minima
+theme: jekyll-theme-yat
+
+
+
 plugins:
   - jekyll-feed
 
