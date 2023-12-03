@@ -5,7 +5,9 @@ title: Tarot - How to read Roman numberals
 # categories: [tarot, tarot deck]
 ---
 
-| number | Roman number |
+Table number:
+
+| Number | Roman number |
 |--- | --- |
 | 1 | I |
 | 2 | II |

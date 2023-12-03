@@ -3,6 +3,7 @@ layout: post
 title: Witchcraft - Moon phase
 date: 2023 Oct 27
 categories: [witchcraft, moon]
+banner: '/assets/material/moon_phase/moon 1.jpg'
 ---
 
 This post talks about phase of the Moon and effection.

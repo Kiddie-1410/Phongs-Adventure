@@ -3,6 +3,8 @@ layout: post
 title: Witchcraft - Herbs and Usage
 date: 2023 Oct 26
 categories: [witchcraft, herbs]
+excerpt_image: '/assets/material/moon_phase/moon 1.jpg'
+
 ---
 
 1. Basil (Húng tây)
