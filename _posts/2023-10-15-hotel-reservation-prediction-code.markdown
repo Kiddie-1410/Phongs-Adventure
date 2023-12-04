@@ -3,6 +3,7 @@ layout: post
 title: DA - Hotel Reservation Prediction (Code)
 date: 2023 Oct 15
 categories: [DA, coding]
+banner: '/assets/material/hotel_reservation_pic/the_code/Hotel Reservation - Machine Learning (1).png'
 ---
 
 # Table of contents
